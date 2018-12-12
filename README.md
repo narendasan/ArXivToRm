@@ -13,5 +13,5 @@ pip3 install requirements.txt
 ## Usage
 
 ```
-./main.py [ ArXiv Code | Path on machine ]
+arxivtorm [ ArXiv Code | Path on machine ]
 ```
