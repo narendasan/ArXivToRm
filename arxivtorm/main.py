@@ -3,6 +3,8 @@
 import arxiv
 import argparse
 from subprocess import call
+import re
+
 def is_arxiv_code(code):
     if ".pdf" in code:
         return False
@@ -15,20 +17,27 @@ def to_slug(title):
     filename = '_'.join(list(filter(None, filename.split('_'))))
     return filename
 
+
+def arxiv_slugify(obj):
+    filename = '_'.join(re.findall(r'\w+', obj.get('title', 'UNTITLED')))
+    filename = '_'.join(list(filter(None, filename.split('_'))))
+    filename = "%s" % (filename)
+    return filename
+
 def main():
     parser = argparse.ArgumentParser(description='Paper to transfer to Remarkable')
     parser.add_argument('paper', type=str, help='ArVix code or path to file')
 
     ARGS = parser.parse_args()
 
-    path = ARGS.paper 
+    path = ARGS.paper
     if is_arxiv_code(ARGS.paper):
         paper = arxiv.query(id_list=[ARGS.paper])[0]
-        arxiv.download(paper, "/tmp/", False, True)
+        arxiv.download(paper, "/tmp/", slugify=arxiv_slugify)
         print("Adding " + paper.title + " to Remarkable")
         path = "/tmp/" +  to_slug(paper.title) + ".pdf"
 
-    call(["rmapi", "put", path])    
+    call(["rmapi", "put", path])
 
 if __name__ == "__main__":
     main()
