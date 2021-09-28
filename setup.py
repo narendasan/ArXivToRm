@@ -19,7 +19,7 @@ setup(
    long_description=long_description,
    long_description_content_type='text/markdown',
    packages=['arxivtorm'],
-   install_requires=['arxiv'],
+   install_requires=['arxiv==1.4.2'],
    entry_points = {
               'console_scripts': [
                   'arxivtorm = arxivtorm.main:main',                  

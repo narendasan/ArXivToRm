@@ -22,14 +22,15 @@ def main():
 
     ARGS = parser.parse_args()
 
-    path = ARGS.paper 
+    path = ARGS.paper
     if is_arxiv_code(ARGS.paper):
-        paper = arxiv.query(id_list=[ARGS.paper])[0]
-        arxiv.download(paper, "/tmp/", slugify=to_slug)
+        paper = list(arxiv.Search(id_list=[ARGS.paper]).results())[0]
+        name = to_slug(paper)
+        paper.download_pdf(dirpath="/tmp/", filename=name+'.pdf')
         print("Adding " + paper.title + " to Remarkable")
         path = "/tmp/" +  to_slug(paper) + ".pdf"
 
-    call(["rmapi", "put", path])    
+    call(["rmapi", "put", path])
 
 if __name__ == "__main__":
     main()
