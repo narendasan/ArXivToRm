@@ -10,7 +10,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
    name='arxivtorm',
-   version='0.1.3',
+   version='0.1.4',
    description='Gets papers from ArXiv and puts them on your remarkable',
    author='Naren Dasan',
    author_email='naren@narendasan.com',
